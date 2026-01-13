@@ -33,19 +33,9 @@ powershell -ExecutionPolicy Bypass -File install.ps1
 
 ### macOS
 
-**Option 1: Terminal**
+**Terminal:**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jacobkim98/Claude-Code-VS-Code-One-Click-Installer/main/mac/install.sh | bash
-```
-
-**Option 2: Download and Run**
-
-1. Download `ClaudeCodeInstaller.app`
-2. Double-click to run
-
-**Build DMG (optional):**
-```bash
-./build-dmg.sh
 ```
 
 ## Directory Structure
@@ -60,9 +50,7 @@ curl -fsSL https://raw.githubusercontent.com/jacobkim98/Claude-Code-VS-Code-One-
 │           └── ClaudeCodeSetup.exe
 │
 └── mac/
-    ├── install.sh               # Shell installer
-    ├── build-dmg.sh             # DMG builder
-    └── ClaudeCodeInstaller.app/ # macOS app bundle
+    └── install.sh               # Shell installer
 ```
 
 ## Features
