@@ -235,7 +235,7 @@ Write-Host ""
 # Open guide page
 $openGuide = Read-Host "Open setup guide page? (Y/n)"
 if ($openGuide -ne "n" -and $openGuide -ne "N") {
-    Start-Process "https://bkamp.ai"
+    Start-Process "https://bkamp.ai/ko/showcases/de04a7ec-50d7-4f8e-a741-f2cdb4753543"
 }
 
 # Open VS Code

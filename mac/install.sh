@@ -137,7 +137,7 @@ main() {
     # 시작 가이드 열기
     read -p "시작 가이드 페이지를 열까요? (Y/n): " open_guide
     if [[ "$open_guide" != "n" && "$open_guide" != "N" ]]; then
-        open "https://bkamp.ai"
+        open "https://bkamp.ai/ko/showcases/de04a7ec-50d7-4f8e-a741-f2cdb4753543"
     fi
 
     # VS Code 열기

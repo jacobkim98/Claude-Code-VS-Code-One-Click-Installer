@@ -41,7 +41,7 @@ korean.FinishedLabel=모든 설치가 완료되었습니다!%n%n처음 사용하
 
 [Run]
 Filename: "cmd.exe"; Parameters: "/c code --new-window"; Description: "VS Code 열기"; Flags: postinstall nowait skipifsilent runhidden
-Filename: "https://bkamp.ai"; Description: "시작 가이드 열기 (Claude 실행 및 로그인 방법 안내)"; Flags: postinstall nowait skipifsilent shellexec
+Filename: "https://bkamp.ai/ko/showcases/de04a7ec-50d7-4f8e-a741-f2cdb4753543"; Description: "시작 가이드 열기 (Claude 실행 및 로그인 방법 안내)"; Flags: postinstall nowait skipifsilent shellexec
 
 [Code]
 var
