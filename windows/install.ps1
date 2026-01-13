@@ -160,9 +160,35 @@ function Install-VSCode {
     }
 }
 
+# Add npm global path to PATH
+function Add-NpmGlobalPath {
+    $npmGlobalPath = "$env:APPDATA\npm"
+
+    # Create npm directory if it doesn't exist
+    if (-not (Test-Path $npmGlobalPath)) {
+        New-Item -ItemType Directory -Path $npmGlobalPath -Force | Out-Null
+    }
+
+    # Check if already in User PATH
+    $userPath = [System.Environment]::GetEnvironmentVariable("Path", "User")
+    if ($userPath -notlike "*$npmGlobalPath*") {
+        # Add to User PATH permanently
+        [System.Environment]::SetEnvironmentVariable("Path", "$userPath;$npmGlobalPath", "User")
+        Write-Host "[OK] npm global path added to PATH" -ForegroundColor Green
+    }
+
+    # Also add to current session
+    if ($env:Path -notlike "*$npmGlobalPath*") {
+        $env:Path = "$env:Path;$npmGlobalPath"
+    }
+}
+
 # Claude Code CLI install
 function Install-ClaudeCLI {
     Write-Host "[..] Installing Claude Code CLI..." -ForegroundColor Yellow
+
+    # Add npm global path first
+    Add-NpmGlobalPath
 
     $npmPath = Get-Command npm -ErrorAction SilentlyContinue
     if ($npmPath) {

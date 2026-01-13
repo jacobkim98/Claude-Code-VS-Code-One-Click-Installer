@@ -274,6 +274,22 @@ begin
   Exec('cmd.exe', '/c setx PATH "%PATH%"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
 end;
 
+procedure AddNpmGlobalPath;
+var
+  ResultCode: Integer;
+  NpmGlobalPath: String;
+begin
+  // npm 글로벌 경로를 사용자 PATH에 추가
+  NpmGlobalPath := ExpandConstant('{userappdata}\npm');
+
+  // 폴더가 없으면 생성
+  if not DirExists(NpmGlobalPath) then
+    CreateDir(NpmGlobalPath);
+
+  // PATH에 추가 (setx 명령어 사용)
+  Exec('cmd.exe', '/c setx PATH "%PATH%;' + NpmGlobalPath + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+end;
+
 procedure InstallClaudeCLI;
 var
   ResultCode: Integer;
@@ -284,6 +300,9 @@ begin
     StatusLabel.Caption := 'Claude Code CLI 설치 중...';
     UpdateItemStatus(3, '설치 중...', False);
     WizardForm.Refresh;
+
+    // npm 글로벌 PATH 먼저 추가
+    AddNpmGlobalPath;
 
     // npm 경로 찾기
     NpmPath := ExpandConstant('{pf}\nodejs\npm.cmd');
