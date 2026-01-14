@@ -37,12 +37,16 @@ install_homebrew() {
         print_skip "Homebrew"
     else
         print_installing "Homebrew"
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        # NONINTERACTIVE=1로 자동 설치 (sudo 비밀번호는 미리 요청)
+        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
         # Apple Silicon Mac의 경우 PATH 추가
         if [[ $(uname -m) == "arm64" ]]; then
             echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
             eval "$(/opt/homebrew/bin/brew shellenv)"
+        else
+            echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+            eval "$(/usr/local/bin/brew shellenv)"
         fi
         print_status "Homebrew 설치 완료"
     fi
@@ -113,6 +117,14 @@ install_vscode_extension() {
 main() {
     echo "설치를 시작합니다..."
     echo ""
+
+    # Homebrew 설치 전 sudo 비밀번호 미리 요청
+    if ! command -v brew &> /dev/null; then
+        echo -e "${YELLOW}→${NC} Homebrew 설치를 위해 관리자 비밀번호가 필요합니다."
+        sudo -v
+        # sudo 타임아웃 방지 (백그라운드에서 갱신)
+        while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+    fi
 
     install_homebrew
     install_nodejs
